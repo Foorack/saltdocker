@@ -41,4 +41,4 @@ jobs:
         context: .
         dockerfile: Dockerfile-${{ matrix.image }}-${{ matrix.version }}
         push: true
-        tags: ghcr.io/${{ github.repository_owner | lower }}/saltdocker:${{ matrix.image }}-${{ matrix.version }}
+        tags: ghcr.io/${{ github.repository }}:${{ matrix.image }}-${{ matrix.version }}
