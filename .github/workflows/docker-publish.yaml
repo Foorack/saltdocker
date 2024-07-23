@@ -39,6 +39,6 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         context: .
-        dockerfile: Dockerfile-${{ matrix.image }}-${{ matrix.version }}
+        file: Dockerfile-${{ matrix.image }}-${{ matrix.version }}
         push: true
         tags: ghcr.io/foorack/saltdocker:${{ matrix.image }}-${{ matrix.version }}
