@@ -1,10 +1,12 @@
 # Dockerfile-master
 FROM ubuntu:22.04
 
+WORKDIR /opt/saltstack/salt
+ENV LOG_LEVEL=info
+EXPOSE 4505 4506 8080
+
 RUN apt-get update && apt-get install -y curl && \
     curl -L https://bootstrap.saltstack.com -o install_salt.sh && \
     sh install_salt.sh -d -M -X onedir %%VERSION%%
 
-WORKDIR /opt/saltstack/salt
-
-CMD salt-master -l info & salt-api -l info
+CMD ["/bin/bash", "-c", "salt-master -l $LOG_LEVEL & salt-api -l $LOG_LEVEL"]
