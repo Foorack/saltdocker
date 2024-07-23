@@ -27,10 +27,10 @@ jobs:
     - name: Copy Dockerfile and substitute version number
       run: |
         cp Dockerfile-${{ matrix.image }} Dockerfile
-        sed -i "s/%%VERSION%%/${{ matrix.version }}/g" Dockerfile
+        sed -i "s/%%VERSION%%/${{ matrix.version }}/g" Dockerfile-${{ matrix.image }}-${{ matrix.version }}
 
     - name: Build Docker image
-      run: docker build Dockerfile -t ghcr.io/foorack/saltdocker:${{ matrix.image }}-${{ matrix.version }}
+      run: docker build . -f Dockerfile-${{ matrix.image }}-${{ matrix.version }} -t ghcr.io/foorack/saltdocker:${{ matrix.image }}-${{ matrix.version }}
 
     - name: Log in to Github Registry
       run: |
