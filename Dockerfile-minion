@@ -3,7 +3,7 @@ FROM ubuntu:22.04
 
 RUN apt-get update && apt-get install -y curl && \
     curl -L https://bootstrap.saltstack.com -o install_salt.sh && \
-    sh install_salt.sh -d -X onedir ${VERSION}
+    sh install_salt.sh -d -X onedir %%VERSION%%
 
 WORKDIR /opt/saltstack/salt
 

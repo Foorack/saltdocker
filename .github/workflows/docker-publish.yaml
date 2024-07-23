@@ -33,7 +33,7 @@ jobs:
     - name: Copy Dockerfile and substitute version number
       run: |
         cp Dockerfile-${{ matrix.image }} Dockerfile-${{ matrix.image }}-${{ matrix.version }}
-        sed -i "s/${VERSION}/${{ matrix.version }}/g" Dockerfile-${{ matrix.image }}-${{ matrix.version }}
+        sed -i "s/%%VERSION%%/${{ matrix.version }}/g" Dockerfile-${{ matrix.image }}-${{ matrix.version }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
