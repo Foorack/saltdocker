@@ -7,6 +7,7 @@ EXPOSE 4505 4506 8080
 
 RUN apt-get update && apt-get install -y curl && \
     curl -L https://bootstrap.saltstack.com -o install_salt.sh && \
-    sh install_salt.sh -d -M -X onedir %%VERSION%%
+    sh install_salt.sh -d -M -X onedir %%VERSION%% && \
+    apt-get install -y salt-api
 
 CMD ["/bin/bash", "-c", "salt-master -l $LOG_LEVEL & salt-api -l $LOG_LEVEL"]
