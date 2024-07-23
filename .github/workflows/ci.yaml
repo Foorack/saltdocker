@@ -20,6 +20,10 @@ jobs:
         image: [master, minion]
         version: [3006.7, 3007.1]
 
+    permissions:
+      contents: read
+      packages: write
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
