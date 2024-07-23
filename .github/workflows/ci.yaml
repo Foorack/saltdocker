@@ -24,16 +24,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-
     - name: Copy Dockerfile and substitute version number
       run: |
-        cp Dockerfile-${{ matrix.image }} Dockerfile-${{ matrix.image }}-${{ matrix.version }}
-        sed -i "s/%%VERSION%%/${{ matrix.version }}/g" Dockerfile-${{ matrix.image }}-${{ matrix.version }}
+        cp Dockerfile-${{ matrix.image }} Dockerfile
+        sed -i "s/%%VERSION%%/${{ matrix.version }}/g" Dockerfile
 
     - name: Build Docker image
-      run: docker build Dockerfile-${{ matrix.image }}-${{ matrix.version }} -t ghcr.io/foorack/saltdocker:${{ matrix.image }}-${{ matrix.version }}
+      run: docker build Dockerfile -t ghcr.io/foorack/saltdocker:${{ matrix.image }}-${{ matrix.version }}
 
     - name: Log in to Github Registry
       run: |
