@@ -41,9 +41,4 @@ jobs:
         context: .
         dockerfile: Dockerfile-${{ matrix.image }}-${{ matrix.version }}
         push: true
-        tags: ghcr.io/${{ github.repository_owner }}/saltdocker:${{ matrix.image }}-${{ matrix.version }}
-
-    - name: Verify Docker image
-      run: |
-        docker pull ghcr.io/${{ github.repository_owner }}/saltdocker:${{ matrix.image }}-${{ matrix.version }}
-        docker images
+        tags: ghcr.io/${{ github.repository_owner | lower }}/saltdocker:${{ matrix.image }}-${{ matrix.version }}
