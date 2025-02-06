@@ -1,44 +1,44 @@
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 name: CI
 
-env: 
-  REGISTRY: ghcr.io
+env:
+    REGISTRY: ghcr.io
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        image: [master, minion]
-        version: [3006.7, 3007.1]
+        strategy:
+            matrix:
+                image: [master, minion]
+                version: [3006.7, 3006.9, 3007.1]
 
-    permissions:
-      contents: read
-      packages: write
+        permissions:
+            contents: read
+            packages: write
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
 
-    - name: Copy Dockerfile and substitute version number
-      run: |
-        cp Dockerfile-${{ matrix.image }} Dockerfile-${{ matrix.image }}-${{ matrix.version }}
-        sed -i "s/%%VERSION%%/${{ matrix.version }}/g" Dockerfile-${{ matrix.image }}-${{ matrix.version }}
+            - name: Copy Dockerfile and substitute version number
+              run: |
+                  cp Dockerfile-${{ matrix.image }} Dockerfile-${{ matrix.image }}-${{ matrix.version }}
+                  sed -i "s/%%VERSION%%/${{ matrix.version }}/g" Dockerfile-${{ matrix.image }}-${{ matrix.version }}
 
-    - name: Build Docker image
-      run: docker build . -f Dockerfile-${{ matrix.image }}-${{ matrix.version }} -t ghcr.io/foorack/saltdocker:${{ matrix.image }}-${{ matrix.version }}
+            - name: Build Docker image
+              run: docker build . -f Dockerfile-${{ matrix.image }}-${{ matrix.version }} -t ghcr.io/foorack/saltdocker:${{ matrix.image }}-${{ matrix.version }}
 
-    - name: Log in to Github Registry
-      run: |
-        echo ${{ secrets.GITHUB_TOKEN }} | docker login -u ${{ github.actor }} --password-stdin ${{ env.REGISTRY }}
-  
-    - name: Push Docker image
-      run: docker push ghcr.io/foorack/saltdocker:${{ matrix.image }}-${{ matrix.version }}
+            - name: Log in to Github Registry
+              run: |
+                  echo ${{ secrets.GITHUB_TOKEN }} | docker login -u ${{ github.actor }} --password-stdin ${{ env.REGISTRY }}
+
+            - name: Push Docker image
+              run: docker push ghcr.io/foorack/saltdocker:${{ matrix.image }}-${{ matrix.version }}
