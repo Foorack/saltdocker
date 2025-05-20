@@ -18,7 +18,7 @@ jobs:
         strategy:
             matrix:
                 image: [master, minion]
-                version: [3006.7, 3006.9, 3007.1]
+                version: [3006.7, 3006.9, 3007.1, 3007.2]
 
         permissions:
             contents: read
